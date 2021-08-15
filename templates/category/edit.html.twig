@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ category.name }} {% endblock %}
+
+{% block body %}
+    <h1>Modifier {{ category.name }}</h1>
+    {% include 'category/_form.html.twig'%}
+
+{% endblock %}
