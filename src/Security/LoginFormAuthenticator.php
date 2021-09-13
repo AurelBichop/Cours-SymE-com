@@ -53,4 +53,8 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 //         * For more details, see https://symfony.com/doc/current/security/experimental_authenticators.html#configuring-the-authentication-entry-point
 //         */
 //    }
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    {
+        // TODO: Implement onAuthenticationFailure() method.
+    }
 }
