@@ -49,7 +49,8 @@ class AppFixtures extends Fixture
                     ->setPostalCode("66-$p")
                     ->setCity("Perpig-$p")
                     ->setUser($users[mt_rand(0,4)])
-                    ->setTotal(mt_rand(2000,30000));
+                    ->setTotal(mt_rand(2000,30000))
+                    ->setPurchasedAt(new \DateTimeImmutable());
 
             if(mt_rand(0,1)){
                 $purchase->setStatus(Purchase::STATUS_PAID);
