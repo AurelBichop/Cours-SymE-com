@@ -7,6 +7,7 @@ use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
 use App\Entity\User;
 use App\Form\CartConfirmationType;
+use App\Purschase\PurchasePersister;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ class PurchaseConfirmationController extends AbstractController
         Route('purchase/confirm',name:"purchase_confirm"),
         isGranted('ROLE_USER',message: 'vous devez être connecté')
     ]
-    public function confirm(Request $request,CartService $cartService,EntityManagerInterface $entityManager)
+    public function confirm(Request $request,CartService $cartService,EntityManagerInterface $entityManager, PurchasePersister $purchasePersister)
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
@@ -39,29 +40,7 @@ class PurchaseConfirmationController extends AbstractController
         /** @var Purchase $purchase */
         $purchase = $form->getData();
 
-        /** @var User $user */
-        $user = $this->getUser();
-        $purchase->setUser($user)
-                 ->setPurchasedAt(new \DateTimeImmutable())
-                 ->setTotal($cartService->getTotal());
-
-        $entityManager->persist($purchase);
-
-
-        foreach ($cartItems as $cartItem){
-            $purchaseItem = (new PurchaseItem())
-                    ->setPurchase($purchase)
-                    ->setProduct($cartItem->product)
-                    ->setQuantity($cartItem->qty)
-                    ->setProductName($cartItem->product->getName())
-                    ->setTotal($cartItem->getTotal())
-                    ->setProductPrice($cartItem->product->getPrice());
-
-            $entityManager->persist($purchaseItem);
-        }
-
-
-        $entityManager->flush();
+        $purchasePersister->storePurchase($purchase);
 
         $cartService->empty();
 
