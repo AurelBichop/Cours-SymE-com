@@ -50,7 +50,7 @@ class AppFixtures extends Fixture
         for ($c=0;$c < 4;$c++){
             $category = new Category();
             $category ->setName("Categorie$c")
-                      ->setSlug("categorie$c")
+                      //->setSlug("categorie$c")
                       ->setOwner($users[mt_rand(0,5)]);
             $manager->persist($category);
 
