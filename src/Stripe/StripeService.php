@@ -7,9 +7,7 @@ use App\Entity\Purchase;
 class StripeService
 {
 
-    public function __construct(protected string $secretKey,protected string $publicKey){
-        dd($secretKey,$publicKey);
-    }
+    public function __construct(protected string $secretKey,protected string $publicKey){}
 
     public function getPayementIntent(Purchase $purchase){
         \Stripe\Stripe::setApiKey($this->secretKey);
