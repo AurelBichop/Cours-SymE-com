@@ -6,7 +6,6 @@
     "require": {
         "php": ">=8.0",
         "ext-ctype": "*",
-        "ext-http": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^4.0",
         "composer/package-versions-deprecated": "1.11.99.2",
